@@ -1,36 +1,23 @@
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 
-# Load dataset
 df = pd.read_csv("data/student-mat.csv", sep=";")
 
-# Features for our first model
 features = [
-    "age",
-    "Medu",
-    "Fedu",
-    "traveltime",
-    "studytime",
-    "failures",
-    "famrel",
-    "freetime",
-    "goout",
-    "Dalc",
-    "Walc",
-    "health",
-    "absences"
+    "age", "Medu", "Fedu", "traveltime", "studytime",
+    "failures", "famrel", "freetime", "goout",
+    "Dalc", "Walc", "health", "absences", "G3"
 ]
 
-# Input features
-X = df[features]
+correlation = df[features].corr()
 
-# Target
-y = df["G3"]
+plt.figure(figsize=(12, 9))
+sns.heatmap(correlation, annot=True, cmap="coolwarm", fmt=".2f")
 
-print("X shape:", X.shape)
-print("y shape:", y.shape)
+plt.title("Correlation Heatmap")
 
-print("\nFirst 5 rows of X:")
-print(X.head())
+# Save the graph
+plt.savefig("screenshots/correlation.png", dpi=300, bbox_inches="tight")
 
-print("\nFirst 5 values of y:")
-print(y.head())
+plt.show()
